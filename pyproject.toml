@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "dbt-fundamentals"
+version = "0.1.0"
+description = "Material for the dbt fundamentals course"
+authors = ["Guillaume Bournique <guillaume.bournique@gmail.com>"]
+readme = "README.md"
+keywords = ["DBT", "SNOWFLAKE"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+dbt-snowflake = "^1.5.2"
+pre-commit = "^3.3.3"
+sqlfluff = "2.1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

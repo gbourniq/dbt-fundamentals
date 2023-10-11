@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: self-hosted
+    timeout-minutes: 6
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v3
+
+      # - name: Check commit messages match angular style
+      #   run: |
+      #     ! git log origin/main..HEAD  --pretty=format:%s | \
+      #       grep -v -E '^(build|chore|ci|docs|feat|fix|perf|style|refactor|test):'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          cache: poetry
+          cache-dependency-path: poetry.lock
+          python-version: 3.8
+          architecture: x64
+
+      - run: make lint
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: dist
+      #     path: '*'
+
+  test:
+    needs: [lint]
+    runs-on: self-hosted
+    steps:
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: dist
+      #     path: *
+      - run: 'echo "placeholder for dbt tests"'
