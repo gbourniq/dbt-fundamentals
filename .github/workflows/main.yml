@@ -37,7 +37,8 @@ jobs:
           python-version: 3.8
           architecture: x64
 
-      - run: make lint
+      - name: Check code is linted
+        run: make lint
 
       # - uses: actions/upload-artifact@v3
       #   with:
@@ -52,4 +53,4 @@ jobs:
       #   with:
       #     name: dist
       #     path: *
-      - run: 'echo "placeholder for dbt tests"'
+      - run: 'echo "placeholder for dbt test"'

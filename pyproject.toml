@@ -11,8 +11,8 @@ python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 dbt-snowflake = "^1.5.2"
-pre-commit = "^3.3.3"
 sqlfluff = "2.1.2"
+yamllint = "^1.32.0"
 
 [build-system]
 requires = ["poetry-core"]

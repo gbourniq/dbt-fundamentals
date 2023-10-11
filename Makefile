@@ -1,11 +1,12 @@
 generate-lockfile:
-	poetry check && poetry lock && poetry export -f requirements.txt --output requirements.txt --with dev
+	poetry check && poetry export -f requirements.txt --output requirements.txt --with dev
 
 fmt:
-	echo "placeholder for formatting"
+	python -m sqlfluff format
 
 lint:
-	echo "placeholder for linting"
+	python -m sqlfluff lint
+	python -m yamllint .
 
 test:
 	echo "placeholder for testing"
