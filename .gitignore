@@ -59,3 +59,4 @@ venv.bak/
 target/
 dbt_packages/
 logs/
+snowflake.log
