@@ -1,0 +1,24 @@
+config:
+  send_anonymous_usage_stats: False
+  use_colors: True
+
+personal_profile:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('PROFILES_YML_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('PROFILES_YML_SNOWFLAKE_USER') }}"
+      password: "{{ env_var('PROFILES_YML_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('PROFILES_YML_SNOWFLAKE_ROLE') }}"
+      database: "{{ env_var('PROFILES_YML_SNOWFLAKE_DATABASE') }}"
+      warehouse: "{{ env_var('PROFILES_YML_SNOWFLAKE_WAREHOUSE') }}"
+      schema: GHA
+      threads: 8
+      client_session_keep_alive: False
+      query_tag: github-actions-ci
+      connect_retries: 0
+      connect_timeout: 10
+      retry_on_database_errors: False
+      retry_all: False
+      reuse_connections: False

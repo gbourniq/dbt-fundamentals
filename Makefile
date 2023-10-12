@@ -9,7 +9,11 @@ lint:
 	python -m yamllint .
 
 test:
-	echo "placeholder for testing"
+	dbt build
 
 clean:
-	rm -rf build dist *.egg-info
+	rm -rf target dbt_packages logs
+
+docs:
+	dbt docs generate
+	dbt docs serve
