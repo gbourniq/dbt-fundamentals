@@ -1,0 +1,29 @@
+# https://docs.getdbt.com/docs/build/tests
+
+version: 2
+
+models:
+
+  - name: stg_payments
+    description: This model cleans up stripe orders fact data
+    columns:
+      - name: order_id
+        description: Order ID
+        tests:
+          - not_null
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values:
+                ["credit_card", "coupon", "bank_transfer", "gift_card"]
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                ["success", "fail"]
+      - name: amount
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null

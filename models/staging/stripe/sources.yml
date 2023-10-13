@@ -1,0 +1,25 @@
+# Sources make it possible to name and describe the data loaded
+# into your warehouse by your extract and load tools
+
+version: 2
+
+sources:
+  - name: stripe
+    description: This is a replica of the Postgres database used by our app
+    database: raw
+    schema: stripe
+    tables:
+      - name: payment
+        identifier: payment
+        description: One record per customer.
+        columns:
+          - name: order_id
+            data_type: number
+          - name: payment_method
+            data_type: string
+          - name: status
+            data_type: string
+          - name: amount
+            data_type: number
+          - name: created_at
+            data_type: date
