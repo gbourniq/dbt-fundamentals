@@ -11,7 +11,8 @@ python = "^3.11"
 
 [tool.poetry.group.dev.dependencies]
 dbt-snowflake = "^1.5.2"
-sqlfluff = "2.1.2"
+sqlfluff = "^2.3.2"
+sqlfluff-templater-dbt = "^2.3.2"
 yamllint = "^1.32.0"
 
 [build-system]

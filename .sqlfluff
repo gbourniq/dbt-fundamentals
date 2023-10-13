@@ -1,7 +1,7 @@
 # https://medium.com/@alice.thomaz./automating-sql-code-formatting-with-sqlfluff-4723779f19c6
 
 [sqlfluff]
-templater = jinja
+templater = dbt
 dialect = snowflake
 exclude_rules = AL04, AL05, AL06, AL07, AM01, AM02, AM03, AM04, AM07, CV01,
                 CV02, CV03, CV04, CV05, CV06, CV07, CV08, CV09, CV10, CV11,
@@ -11,11 +11,14 @@ ignore = templating
 large_file_skip_byte_limit = 0
 max_line_length = 0
 
+[sqlfluff:templater:dbt]
+project_dir = .
+profile = personal_profile
 
 [sqlfluff:layout:type:alias_expression]
 spacing_before = align
 align_within = select_clause
-spacing_after = touch
+align_scope = bracketed
 
 [sqlfluff:indentation]
 tab_space_size = 2

@@ -9,6 +9,16 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/.github
+  PROFILES_YML_SNOWFLAKE_ACCOUNT: ${{ secrets.PROFILES_YML_SNOWFLAKE_ACCOUNT }}
+  PROFILES_YML_SNOWFLAKE_USER: ${{ secrets.PROFILES_YML_SNOWFLAKE_USER }}
+  PROFILES_YML_SNOWFLAKE_PASSWORD: ${{ secrets.PROFILES_YML_SNOWFLAKE_PASSWORD }}
+  PROFILES_YML_SNOWFLAKE_ROLE: ${{ secrets.PROFILES_YML_SNOWFLAKE_ROLE }}
+  PROFILES_YML_SNOWFLAKE_DATABASE: ${{ secrets.PROFILES_YML_SNOWFLAKE_DATABASE }}
+  PROFILES_YML_SNOWFLAKE_SCHEMA: "CI_GHA_${{ github.run_id }}"
+  PROFILES_YML_SNOWFLAKE_WAREHOUSE: ${{ secrets.PROFILES_YML_SNOWFLAKE_WAREHOUSE }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -22,24 +32,16 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install dependencies
+      - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
+      - name: Install dbt dependencies
+        run: dbt deps
       - name: Check code is linted
         run: make lint
 
   test:
     needs: [lint]
     runs-on: ubuntu-latest
-    # Set environment variables used throughout GitHub workflow
-    env:
-      DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/.github
-      # Unique set of connection credentials for this worklfow alone.
-      PROFILES_YML_SNOWFLAKE_ACCOUNT: ${{ secrets.PROFILES_YML_SNOWFLAKE_ACCOUNT }}
-      PROFILES_YML_SNOWFLAKE_USER: ${{ secrets.PROFILES_YML_SNOWFLAKE_USER }}
-      PROFILES_YML_SNOWFLAKE_PASSWORD: ${{ secrets.PROFILES_YML_SNOWFLAKE_PASSWORD }}
-      PROFILES_YML_SNOWFLAKE_ROLE: ${{ secrets.PROFILES_YML_SNOWFLAKE_ROLE }}
-      PROFILES_YML_SNOWFLAKE_DATABASE: ${{ secrets.PROFILES_YML_SNOWFLAKE_DATABASE }}
-      PROFILES_YML_SNOWFLAKE_WAREHOUSE: ${{ secrets.PROFILES_YML_SNOWFLAKE_WAREHOUSE }}
     steps:
       - name: Clone Repo
         uses: actions/checkout@v3
@@ -49,12 +51,16 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install dependencies
+      - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
-      - name: Run dbt test
+      - name: Install dbt dependencies
+        run: dbt deps
+      - name: Build and test models
         run: make test
-      - name: Check freshness of source data, but silence if stale
+      - name: Test data source freshness, but silence if stale
         run: make check-src-freshness || true
+      - name: Cleanup target schema
+        run: make drop-target-schema
       - name: Upload compiled SQL files as artifact
         uses: actions/upload-artifact@v3
         with:

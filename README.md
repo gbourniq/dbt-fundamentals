@@ -1,5 +1,6 @@
 # dbt-demo
 
-https://courses.getdbt.com/courses/take/fundamentals/
+https://courses.getdbt.com/courses
+https://docs.getdbt.com
 
-repository for the dbt fundamental course
+repository for the dbt course

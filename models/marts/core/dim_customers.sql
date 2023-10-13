@@ -1,9 +1,11 @@
 -- Get staging tables
 
 WITH customers AS (
-
-  SELECT * FROM {{ ref('stg_customers') }}
-
+  SELECT * FROM (
+    SELECT * FROM {{ ref('stg_customers') }}
+    UNION
+    SELECT * FROM {{ ref('additional_customers') }}
+  )
 ),
 
 orders AS (

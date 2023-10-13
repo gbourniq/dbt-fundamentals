@@ -4,6 +4,9 @@ yaml-files:
   - "*.yml"
   - ".yamllint"
 
+ignore: |
+  dbt_packages
+
 rules:
   braces:
     level: warning
