@@ -7,6 +7,7 @@ models:
     description: This model cleans up customer data
     columns:
       - name: customer_id
+        description: Primary key for customers.
         description: Primary key
         tests:
           - unique
@@ -16,16 +17,18 @@ models:
     description: This model cleans up order data
     columns:
       - name: order_id
-        description: Primary key
+        description: Primary key for orders.
         tests:
           - unique
           - not_null
       - name: status
+        description: '{{ doc("order_status") }}'
         tests:
           - accepted_values:
               values:
                 ["placed", "shipped", "completed", "return_pending", "returned"]
       - name: customer_id
+        description: Foreign key to stg_customers.customer_id.
         tests:
           - not_null
           - relationships:
