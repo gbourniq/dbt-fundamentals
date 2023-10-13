@@ -7,6 +7,10 @@ models:
   - name: stg_payments
     description: This model cleans up stripe orders fact data
     columns:
+      - name: payment_id
+        description: Payment ID
+        tests:
+          - not_null
       - name: order_id
         description: Order ID
         tests:
