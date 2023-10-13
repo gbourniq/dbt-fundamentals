@@ -31,8 +31,10 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install dependencies
+      - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
+      - name: Install dbt dependencies
+        run: dbt deps
       - name: Check code is linted
         run: make lint
 
@@ -48,8 +50,10 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install dependencies
+      - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
+      - name: Install dbt dependencies
+        run: dbt deps
       - name: Drop target schema
         run: make drop-target-schema
       - name: Build and test models
