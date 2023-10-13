@@ -8,7 +8,7 @@
 {{ log('dropping schema ' ~ target.database ~ '.' ~ schema, info=True) }}
 
 {% set query %}
-    drop if exists schema {{ target.database }}.{{ schema }}
+    drop schema if exists {{ target.database }}.{{ schema }}
 {% endset %}
 
 {% do run_query(query) %}
