@@ -23,7 +23,8 @@ check-src-freshness:
 # Development
 
 clean:
-	rm -rf target dbt_packages logs
+	dbt clean
+	rm -rf logs
 
 docs:
 	dbt docs generate
