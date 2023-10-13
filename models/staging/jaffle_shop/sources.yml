@@ -22,6 +22,13 @@ sources:
       - name: orders
         identifier: orders
         description: One record per order. Includes cancelled and deleted orders.
+        # we expected new data to be loaded into the
+        # source table at least every 24 hours
+        # _etl_loaded_at is a field that represents when new data is loaded
+        loaded_at_field: _etl_loaded_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
         columns:
           - name: id
             data_type: number

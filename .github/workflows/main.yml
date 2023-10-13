@@ -53,3 +53,5 @@ jobs:
         run: pip install --no-dependencies -r requirements.txt
       - name: Run dbt test
         run: make test
+      - name: Check freshness of source data, but silence if stale
+        run: make check-src-freshness || true
