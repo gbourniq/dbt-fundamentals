@@ -1,0 +1,12 @@
+# leverage modelling of common sources
+# leverage macros across multiple dbt projects
+
+# find packages at https://hub.getdbt.com
+# some popular packages: dbtutils, which includes date_spine for long tables with dates
+
+# packages do not only consist of macros, they can be models,
+# seeds, analyses, etc. e.g gitlabhq/snowflake_spend
+
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.1.1
