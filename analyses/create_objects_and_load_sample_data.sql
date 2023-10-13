@@ -9,6 +9,8 @@ CREATE DATABASE raw;
 CREATE DATABASE analytics;
 CREATE SCHEMA raw.jaffle_shop;
 CREATE SCHEMA raw.stripe;
+CREATE SCHEMA raw.monitoring;
+
 
 -- customers table
 CREATE TABLE raw.jaffle_shop.customers
