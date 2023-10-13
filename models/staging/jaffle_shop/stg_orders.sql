@@ -7,4 +7,4 @@ SELECT
 
 FROM {{ source('jaffle_shop', 'orders') }}
 
-  {{ limit_data_in_dev(column_name='order_date', dev_days_of_data=365 * 10) }}  -- get last 10 years of data for tests to pass
+{{ limit_data_in_dev(column_name='order_date', dev_days_of_data=365 * 10) }}  -- get last 10 years of data for tests to pass
