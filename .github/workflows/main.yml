@@ -55,3 +55,8 @@ jobs:
         run: make test
       - name: Check freshness of source data, but silence if stale
         run: make check-src-freshness || true
+      - name: Upload compiled SQL files as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: target
+          path: target
