@@ -9,6 +9,15 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/.github
+  PROFILES_YML_SNOWFLAKE_ACCOUNT: ${{ secrets.PROFILES_YML_SNOWFLAKE_ACCOUNT }}
+  PROFILES_YML_SNOWFLAKE_USER: ${{ secrets.PROFILES_YML_SNOWFLAKE_USER }}
+  PROFILES_YML_SNOWFLAKE_PASSWORD: ${{ secrets.PROFILES_YML_SNOWFLAKE_PASSWORD }}
+  PROFILES_YML_SNOWFLAKE_ROLE: ${{ secrets.PROFILES_YML_SNOWFLAKE_ROLE }}
+  PROFILES_YML_SNOWFLAKE_DATABASE: ${{ secrets.PROFILES_YML_SNOWFLAKE_DATABASE }}
+  PROFILES_YML_SNOWFLAKE_WAREHOUSE: ${{ secrets.PROFILES_YML_SNOWFLAKE_WAREHOUSE }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -30,16 +39,6 @@ jobs:
   test:
     needs: [lint]
     runs-on: ubuntu-latest
-    # Set environment variables used throughout GitHub workflow
-    env:
-      DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/.github
-      # Unique set of connection credentials for this worklfow alone.
-      PROFILES_YML_SNOWFLAKE_ACCOUNT: ${{ secrets.PROFILES_YML_SNOWFLAKE_ACCOUNT }}
-      PROFILES_YML_SNOWFLAKE_USER: ${{ secrets.PROFILES_YML_SNOWFLAKE_USER }}
-      PROFILES_YML_SNOWFLAKE_PASSWORD: ${{ secrets.PROFILES_YML_SNOWFLAKE_PASSWORD }}
-      PROFILES_YML_SNOWFLAKE_ROLE: ${{ secrets.PROFILES_YML_SNOWFLAKE_ROLE }}
-      PROFILES_YML_SNOWFLAKE_DATABASE: ${{ secrets.PROFILES_YML_SNOWFLAKE_DATABASE }}
-      PROFILES_YML_SNOWFLAKE_WAREHOUSE: ${{ secrets.PROFILES_YML_SNOWFLAKE_WAREHOUSE }}
     steps:
       - name: Clone Repo
         uses: actions/checkout@v3
