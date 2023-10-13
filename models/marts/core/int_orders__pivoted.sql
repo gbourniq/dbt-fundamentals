@@ -1,4 +1,7 @@
-{%- set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] -%}
+-- https://jinja.palletsprojects.com/en/3.0.x/templates/#for
+-- http://jinja.quantprogramming.com
+
+{% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
 
 WITH payments AS (
   SELECT * FROM {{ ref('stg_payments') }}
