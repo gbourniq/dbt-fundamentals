@@ -14,7 +14,6 @@ max_line_length = 0
 [sqlfluff:templater:dbt]
 project_dir = .
 profile = personal_profile
-target = dev
 
 [sqlfluff:layout:type:alias_expression]
 spacing_before = align
