@@ -34,3 +34,10 @@ dbt-compile-%:
 
 dbt-show-%:
 	dbt show --select $(*)
+
+clean-stale-models:
+	dbt run-operation clean_stale_models \
+		--args "database: raw" \
+		--args "schema: jaffle_shop" \
+		--args "days: 1" \
+		--args "dry_run: True"
