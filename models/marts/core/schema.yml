@@ -3,6 +3,7 @@
 version: 2
 
 models:
+
   - name: dim_customers
     description: One record per customer in the source data
     columns:
@@ -11,5 +12,62 @@ models:
         tests:
           - unique
           - not_null
+      - name: first_name
+        description: First name of the customer.
+      - name: last_name
+        description: Last name of the customer.
       - name: first_order_date
         description: NULL when a customer has not yet placed an order.
+      - name: most_recent_order_date
+        description: NULL when a customer has not yet placed an order.
+      - name: lifetime_value
+        description: Total amount a customer has spent at jaffle shop.
+      - name: number_of_orders
+        description: Number of orders a customer has placed at jaffle shop.
+        tests:
+          - not_null
+
+  - name: fct_orders
+    description: One record per customer in the source data
+    columns:
+      - name: order_id
+        description: Order ID placed by a customer
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: customer_id
+        description: Customer ID who placed the order
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values:
+                ["credit_card", "coupon", "bank_transfer", "gift_card"]
+      - name: payment_status
+        tests:
+          - accepted_values:
+              values:
+                ["success", "fail"]
+      - name: order_status
+        tests:
+          - accepted_values:
+              values:
+                ["placed", "shipped", "completed", "return_pending", "returned"]
+      - name: amount
+        description: Order amount
+        tests:
+          - not_null
+      - name: payment_date
+        description: Order amount
+        tests:
+          - not_null
+      - name: order_date
+        description: Order amount
+        tests:
+          - not_null

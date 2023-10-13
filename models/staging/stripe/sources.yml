@@ -4,39 +4,29 @@
 version: 2
 
 sources:
-  - name: jaffle_shop
+  - name: stripe
     description: This is a replica of the Postgres database used by our app
     database: raw
-    schema: jaffle_shop
+    schema: stripe
     tables:
-      - name: customers
-        identifier: customers
+      - name: payment
+        identifier: payment
         description: One record per customer.
-        columns:
-          - name: id
-            data_type: number
-          - name: first_name
-            data_type: string
-          - name: last_name
-            data_type: string
-      - name: orders
-        identifier: orders
-        description: One record per order. Includes cancelled and deleted orders.
         # we expected new data to be loaded into the
         # source table at least every 24 hours
         # _etl_loaded_at is a field that represents when new data is loaded
-        loaded_at_field: _etl_loaded_at
+        loaded_at_field: _batched_at
         freshness:
           warn_after: {count: 12, period: hour}
           error_after: {count: 24, period: hour}
         columns:
-          - name: id
+          - name: order_id
             data_type: number
-          - name: user_id
-            data_type: number
-          - name: order_date
-            data_type: date
+          - name: payment_method
+            data_type: string
           - name: status
             data_type: string
-          - name: _etl_loaded_at
-            data_type: timestamp
+          - name: amount
+            data_type: number
+          - name: created_at
+            data_type: date

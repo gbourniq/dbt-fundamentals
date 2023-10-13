@@ -17,3 +17,6 @@ clean:
 docs:
 	dbt docs generate
 	dbt docs serve
+
+check-src-freshness:
+	dbt source freshness
