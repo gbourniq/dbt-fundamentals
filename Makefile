@@ -10,6 +10,9 @@ lint:
 	python -m sqlfluff lint
 	python -m yamllint .
 
+drop-target-schema:
+	dbt run-operation drop_schema
+
 test:
 	dbt build
 

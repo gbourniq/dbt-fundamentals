@@ -51,9 +51,11 @@ jobs:
           cache-dependency-path: 'requirements.txt'
       - name: Install dependencies
         run: pip install --no-dependencies -r requirements.txt
-      - name: Run dbt test
+      - name: Drop target schema
+        run: make drop-target-schema
+      - name: Build and test models
         run: make test
-      - name: Check freshness of source data, but silence if stale
+      - name: Test data source freshness, but silence if stale
         run: make check-src-freshness || true
       - name: Upload compiled SQL files as artifact
         uses: actions/upload-artifact@v3
