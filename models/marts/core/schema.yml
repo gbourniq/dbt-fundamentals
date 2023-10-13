@@ -5,7 +5,12 @@ version: 2
 models:
 
   - name: dim_customers
-    description: One record per customer in the source data
+    description: |
+      One record per customer in the source data.
+
+      `dbt-profiler` results:
+
+      {{ doc("dbt_profiler__dim_customers") }}
     columns:
       - name: customer_id
         description: Primary key
