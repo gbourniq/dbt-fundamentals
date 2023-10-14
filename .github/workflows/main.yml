@@ -37,15 +37,12 @@ jobs:
           cache-dependency-path: 'requirements.txt'
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
-      # - name: Cache Python dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.local/share/virtualenvs
-      #       ~/.pyenv
-      #     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-      - name: TEMP
-        run: which dbt
+      - name: Cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            /opt/hostedtoolcache/Python
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
       - name: Check Snowflake DWH connection
         run: dbt debug
       - name: Install dbt dependencies
@@ -65,8 +62,12 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install python dependencies
-        run: pip install --no-dependencies -r requirements.txt
+      - name: Restore cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            /opt/hostedtoolcache/Python
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
       - name: Install dbt dependencies
         run: dbt deps
       - name: Test data source freshness
