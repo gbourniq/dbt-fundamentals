@@ -1,7 +1,50 @@
-# https://docs.getdbt.com/docs/build/tests
-
 version: 2
 
+# Sources make it possible to name and describe the data loaded
+# into your warehouse by your extract and load tools
+sources:
+  - name: jaffle_shop
+    description: This is a replica of the Postgres database used by our app
+    database: raw
+    schema: jaffle_shop
+    tables:
+      - name: customers
+        identifier: customers
+        description: One record per customer.
+        columns:
+          - name: id
+            data_type: number
+            # test on the raw data directly
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            data_type: string
+          - name: last_name
+            data_type: string
+      - name: orders
+        identifier: orders
+        description: One record per order. Includes cancelled and deleted orders.
+        # we expected new data to be loaded into the
+        # source table at least every 24 hours
+        # _etl_loaded_at is a field that represents when new data is loaded
+        loaded_at_field: _etl_loaded_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+          - name: id
+            data_type: number
+          - name: user_id
+            data_type: number
+          - name: order_date
+            data_type: date
+          - name: status
+            data_type: string
+          - name: _etl_loaded_at
+            data_type: timestamp
+
+# https://docs.getdbt.com/docs/build/tests
 models:
   - name: stg_customers
     description: This model cleans up customer data

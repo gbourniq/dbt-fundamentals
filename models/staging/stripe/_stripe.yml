@@ -1,7 +1,7 @@
+version: 2
+
 # Sources make it possible to name and describe the data loaded
 # into your warehouse by your extract and load tools
-
-version: 2
 
 sources:
   - name: stripe
@@ -30,3 +30,39 @@ sources:
             data_type: number
           - name: created_at
             data_type: date
+
+# https://docs.getdbt.com/docs/build/tests
+models:
+
+  - name: stg_payments
+    description: This model cleans up stripe orders fact data
+    columns:
+      - name: payment_id
+        description: Payment ID
+        tests:
+          - not_null
+      - name: order_id
+        description: Order ID
+        tests:
+          - not_null
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values:
+                ["credit_card", "coupon", "bank_transfer", "gift_card"]
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                ["success", "fail"]
+      - name: amount
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: year
+              interval: 10

@@ -19,7 +19,7 @@ test:
 # TODO: automate this in CI with github autobot https://hub.getdbt.com/data-mie/dbt_profiler/latest
 dbt-profiler:
 	dbt run-operation print_profile_docs --args '{"relation_name": "dim_customers"}' --quiet
-	echo "Copy the above output into models/marts/core/dbt_profiler__dim_customers.md"
+	echo "Copy the above output into models/marts/core/_core.md"
 
 check-src-freshness:
 	dbt source freshness
