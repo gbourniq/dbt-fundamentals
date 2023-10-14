@@ -18,9 +18,10 @@ check:
 
 test-coverage:
 	dbt run-operation required_tests
-	dbt docs generate
-	dbt-coverage compute test --model-path-filter models/marts --cov-fail-under 0.5
-	dbt-coverage compute doc --model-path-filter models/marts --cov-fail-under 0.5
+	# TODO: uncomment when dbt-coverage releases a version compatible with dbt>1.5.0
+	# dbt docs generate
+	# dbt-coverage compute test --model-path-filter models/marts --cov-fail-under 0.5
+	# dbt-coverage compute doc --model-path-filter models/marts --cov-fail-under 0.5
 
 # TODO: automate this in CI with github autobot https://hub.getdbt.com/data-mie/dbt_profiler/latest
 dbt-profiler:

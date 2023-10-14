@@ -69,4 +69,4 @@ tests:
     +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'error') }}"
     +store_failures: true
     +schema: test_failures
-    # +where_date: "order_date > '2015-01-01" # ignore records before that date
+    +where_date: "order_date > '2015-01-01" # ignore records before that date

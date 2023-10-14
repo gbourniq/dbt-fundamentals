@@ -8,10 +8,10 @@ keywords = ["DBT", "SNOWFLAKE"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-dbt-coverage = "^0.3.4"
 
 [tool.poetry.group.dev.dependencies]
-dbt-snowflake = "^1.5.2"
+# dbt-coverage = "^0.3.4" uncomment when version compatible with dbt>1.5.0
+dbt-snowflake = "^1.6.4"
 sqlfluff = "^2.3.2"
 sqlfluff-templater-dbt = "^2.3.2"
 yamllint = "^1.32.0"
