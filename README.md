@@ -1,5 +1,7 @@
 # Repository for the dbt courses
 
+![Data Lineage](.github/assets/lineage_graph.png)
+
 ## dbt documentation
 <https://courses.getdbt.com/courses>
 <https://docs.getdbt.com/guides/best-practices>
@@ -9,7 +11,55 @@
 ## Snowflake instance
 <https://qr92018.eu-west-2.aws.snowflakecomputing.com/>
 
-## Materialization in dbt
+# Setup
+
+Install dbt in a virtual environment
+```bash
+pip install --no-dependencies -r requirements.txt
+```
+
+Create a `~/.dbt/profiles.yml`
+```
+personal_profile:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ****
+      user: ****
+      password: ****
+      role: ****
+      database: ****
+      warehouse: ****
+      schema: ****
+      threads: 8
+      client_session_keep_alive: False
+      query_tag: ****
+      connect_retries: 0
+      connect_timeout: 10
+      retry_on_database_errors: False
+      retry_all: False
+      reuse_connections: False
+```
+
+Check connection
+```bash
+dbt deps
+dbt debug
+```
+
+Create database, schemas and tables
+```bash
+dbt run-operation create_db_objects
+dbt run-operation create_sample_src_tables
+```
+
+Build and test dbt models
+```bash
+dbt build
+```
+
+## Notes on materializations in dbt
 
 Materialization defines how dbt builds the models (select statements).
 
