@@ -37,6 +37,8 @@ jobs:
           cache-dependency-path: 'requirements.txt'
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
+      - name: TEMP
+        run: where dbt
       - name: Check Snowflake DWH connection
         run: dbt debug
       - name: Install dbt dependencies
