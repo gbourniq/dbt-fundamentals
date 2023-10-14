@@ -1,5 +1,7 @@
 -- Get staging tables
 
+{{ config(required_tests=None) }}
+
 WITH customers AS (
   SELECT * FROM (
     SELECT * FROM {{ ref('stg_customers') }}

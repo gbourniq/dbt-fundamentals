@@ -369,6 +369,20 @@ typing-extensions = ">=3.7.4"
 urllib3 = ">=1.0,<2.0"
 
 [[package]]
+name = "dbt-coverage"
+version = "0.3.4"
+description = "One-stop-shop for docs and test coverage of dbt projects"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "dbt_coverage-0.3.4-py3-none-any.whl", hash = "sha256:bfb0a064978149e666406c98a1683d390846c8c1ba756626a01013c45a32311d"},
+    {file = "dbt_coverage-0.3.4.tar.gz", hash = "sha256:4f550965a552bc485d255a3027da1d787d38ab6e408aef3f571f3fb876fff3b7"},
+]
+
+[package.dependencies]
+typer = ">=0.4.0,<0.5.0"
+
+[[package]]
 name = "dbt-extractor"
 version = "0.4.1"
 description = "A tool to analyze and extract information from Jinja used in dbt projects."
@@ -1862,6 +1876,26 @@ slack = ["slack-sdk"]
 telegram = ["requests"]
 
 [[package]]
+name = "typer"
+version = "0.4.2"
+description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "typer-0.4.2-py3-none-any.whl", hash = "sha256:023bae00d1baf358a6cc7cea45851639360bb716de687b42b0a4641cd99173f1"},
+    {file = "typer-0.4.2.tar.gz", hash = "sha256:b8261c6c0152dd73478b5ba96ba677e5d6948c715c310f7c91079f311f62ec03"},
+]
+
+[package.dependencies]
+click = ">=7.1.1,<9.0.0"
+
+[package.extras]
+all = ["colorama (>=0.4.3,<0.5.0)", "shellingham (>=1.3.0,<2.0.0)"]
+dev = ["autoflake (>=1.3.1,<2.0.0)", "flake8 (>=3.8.3,<4.0.0)", "pre-commit (>=2.17.0,<3.0.0)"]
+doc = ["mdx-include (>=1.4.1,<2.0.0)", "mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=8.1.4,<9.0.0)"]
+test = ["black (>=22.3.0,<23.0.0)", "coverage (>=5.2,<6.0)", "isort (>=5.0.6,<6.0.0)", "mypy (==0.910)", "pytest (>=4.4.0,<5.4.0)", "pytest-cov (>=2.10.0,<3.0.0)", "pytest-sugar (>=0.9.4,<0.10.0)", "pytest-xdist (>=1.32.0,<2.0.0)", "shellingham (>=1.3.0,<2.0.0)"]
+
+[[package]]
 name = "typing-extensions"
 version = "4.8.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1924,4 +1958,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e92fbdc713e77595f8b2ad846e49bfa7efce70cba45df8c158cee144c8449900"
+content-hash = "dcabd211e475938b6c78f8879b9bffa11195b772a753a447baa1a639a3043f84"

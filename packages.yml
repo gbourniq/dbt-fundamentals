@@ -18,3 +18,8 @@ packages:
     version: 2.6.1
   - package: dbt-labs/dbt_external_tables
     version: 0.8.5
+  - package: tnightengale/dbt_meta_testing
+    version: 0.3.6
+    # https://dbt-labs.github.io/dbt-project-evaluator/0.8/customization
+  - package: dbt-labs/dbt_project_evaluator
+    version: 0.7.0

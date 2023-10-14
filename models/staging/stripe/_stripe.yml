@@ -1,0 +1,75 @@
+version: 2
+
+# Sources make it possible to name and describe the data loaded
+# into your warehouse by your extract and load tools
+
+sources:
+  - name: stripe
+    description: This is a replica of the Postgres database used by our app
+    database: raw
+    schema: stripe
+    tables:
+      - name: payment
+        identifier: payment
+        description: One record per customer.
+        # we expected new data to be loaded into the
+        # source table at least every 24 hours
+        # _etl_loaded_at is a field that represents when new data is loaded
+        loaded_at_field: _batched_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          # 10 years for test to pass in CI with the sample data
+          error_after: {count: 87600, period: hour}
+        columns:
+          - name: id
+            data_type: number
+            tests:
+              - unique
+              - not_null
+          - name: order_id
+            data_type: number
+          - name: payment_method
+            data_type: string
+          - name: status
+            data_type: string
+          - name: amount
+            data_type: number
+          - name: created_at
+            data_type: date
+
+# https://docs.getdbt.com/docs/build/tests
+models:
+
+  - name: stg_payments
+    description: This model cleans up stripe orders fact data
+    columns:
+      - name: payment_id
+        description: Payment ID
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: Order ID
+        tests:
+          - not_null
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values:
+                ["credit_card", "coupon", "bank_transfer", "gift_card"]
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                ["success", "fail"]
+      - name: amount
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: year
+              interval: 10

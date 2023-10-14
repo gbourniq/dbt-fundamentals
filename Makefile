@@ -6,20 +6,26 @@ generate-lockfile:
 fmt:
 	python -m sqlfluff format
 
+test:
+	dbt build --exclude package:dbt_project_evaluator --fail-fast --store-failures
+
 lint:
 	python -m sqlfluff lint
 	python -m yamllint .
 
-drop-target-schema:
-	dbt run-operation drop_schema
+check:
+	dbt build --select package:dbt_project_evaluator
 
-test:
-	dbt build
+test-coverage:
+	dbt run-operation required_tests
+	dbt docs generate
+	dbt-coverage compute test --model-path-filter models/marts --cov-fail-under 0.5
+	dbt-coverage compute doc --model-path-filter models/marts --cov-fail-under 0.5
 
 # TODO: automate this in CI with github autobot https://hub.getdbt.com/data-mie/dbt_profiler/latest
 dbt-profiler:
 	dbt run-operation print_profile_docs --args '{"relation_name": "dim_customers"}' --quiet
-	echo "Copy the above output into models/marts/core/dbt_profiler__dim_customers.md"
+	echo "Copy the above output into models/marts/core/_core.md"
 
 check-src-freshness:
 	dbt source freshness
