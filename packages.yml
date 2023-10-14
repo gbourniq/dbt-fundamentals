@@ -15,6 +15,6 @@ packages:
   - package: data-mie/dbt_profiler
     version: 0.6.4
   - package: brooklyn-data/dbt_artifacts
-    version: 2.4.2
+    version: 2.6.1
   - package: dbt-labs/dbt_external_tables
     version: 0.8.5

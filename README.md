@@ -1,9 +1,13 @@
-# dbt-demo
+# Repository for the dbt courses
 
-https://courses.getdbt.com/courses
-https://docs.getdbt.com
+## dbt documentation
+<https://courses.getdbt.com/courses>
+<https://docs.getdbt.com/guides/best-practices>
+<https://docs.getdbt.com/docs/introduction>
+<https://docs.getdbt.com/reference/references-overview>
 
-repository for the dbt course
+## Snowflake instance
+<https://qr92018.eu-west-2.aws.snowflakecomputing.com/>
 
 ## Materialization in dbt
 
@@ -21,9 +25,9 @@ Materialization defines how dbt builds the models (select statements).
   Help reduces the amount of tables in the WH, but harder to debug, cannot be queried directly.
 * Incremental: Only brings in new records in upstream tables, do not rebuild the table from scratch
 * Snapshot: Look at changed records, if anything changes, bring the updated records as a NEW row - no loss of information
-  * Used for type 2 slowly changing dimension tables: https://docs.getdbt.com/docs/build/snapshots
+  * Used for type 2 slowly changing dimension tables: <https://docs.getdbt.com/docs/build/snapshots>
   * Preserve the history of changing fields (e.g. dobjects, sec master)
-  * Snapshots: https://courses.getdbt.com/courses/take/advanced-materializations/lessons/30195287-implementing-snapshots
+  * Snapshots: <https://courses.getdbt.com/courses/take/advanced-materializations/lessons/30195287-implementing-snapshots>
   * Usually applied on source tables
 
 Generally, start with a view, when it takes too long to query, "upgrade" the model to a table.
