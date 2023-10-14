@@ -65,7 +65,7 @@ jobs:
       - name: Build and test models
         run: make test
       - name: Test coverage
-        run: make check-coverage
+        run: make test-coverage
       - name: Upload compiled SQL files as artifact
         uses: actions/upload-artifact@v3
         with:

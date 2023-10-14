@@ -1,0 +1,152 @@
+{
+  "cov_type": "doc",
+  "covered": 13,
+  "total": 20,
+  "coverage": 0.65,
+  "tables": [
+    {
+      "name": "dbt_gbournique.int_orders__pivoted",
+      "covered": 1,
+      "total": 5,
+      "coverage": 0.2,
+      "columns": [
+        {
+          "name": "order_id",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "credit_card_amount",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "coupon_amount",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "bank_transfer_amount",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "gift_card_amount",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        }
+      ]
+    },
+    {
+      "name": "dbt_gbournique.fct_orders",
+      "covered": 5,
+      "total": 8,
+      "coverage": 0.625,
+      "columns": [
+        {
+          "name": "order_id",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "customer_id",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "payment_method",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "payment_status",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "order_status",
+          "covered": 0,
+          "total": 1,
+          "coverage": 0.0
+        },
+        {
+          "name": "amount",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "payment_date",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "order_date",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        }
+      ]
+    },
+    {
+      "name": "dbt_gbournique.dim_customers",
+      "covered": 7,
+      "total": 7,
+      "coverage": 1.0,
+      "columns": [
+        {
+          "name": "customer_id",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "first_name",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "last_name",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "first_order_date",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "most_recent_order_date",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "lifetime_value",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        },
+        {
+          "name": "number_of_orders",
+          "covered": 1,
+          "total": 1,
+          "coverage": 1.0
+        }
+      ]
+    }
+  ]
+}
