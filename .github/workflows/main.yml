@@ -57,8 +57,8 @@ jobs:
         run: pip install --no-dependencies -r requirements.txt
       - name: Install dbt dependencies
         run: dbt deps
-      - name: Test data source freshness, but silence if stale
-        run: make check-src-freshness || true
+      - name: Test data source freshness
+        run: make check-src-freshness
       - name: Build and test models
         run: make test
       - name: Cleanup target schema
