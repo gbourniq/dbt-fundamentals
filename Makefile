@@ -10,11 +10,11 @@ lint:
 	python -m sqlfluff lint
 	python -m yamllint .
 
-drop-target-schema:
-	dbt run-operation drop_schema
-
 test:
 	dbt build
+
+check-coverage:
+	dbt run-operation required_tests
 
 # TODO: automate this in CI with github autobot https://hub.getdbt.com/data-mie/dbt_profiler/latest
 dbt-profiler:

@@ -77,3 +77,15 @@ models:
         description: Order amount
         tests:
           - not_null
+
+  - name: int_orders__pivoted
+    description: One record per order
+    columns:
+      - name: order_id
+        description: Order ID placed by a customer
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
