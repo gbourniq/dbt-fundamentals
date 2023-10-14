@@ -84,6 +84,5 @@ jobs:
           cache-dependency-path: 'requirements.txt'
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
-      - name: Install dbt dependencies
       - name: Cleanup target schema
         run: dbt run-operation drop_schema
