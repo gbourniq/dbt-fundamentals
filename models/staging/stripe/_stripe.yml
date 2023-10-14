@@ -21,6 +21,11 @@ sources:
           # 10 years for test to pass in CI with the sample data
           error_after: {count: 87600, period: hour}
         columns:
+          - name: id
+            data_type: number
+            tests:
+              - unique
+              - not_null
           - name: order_id
             data_type: number
           - name: payment_method
@@ -41,6 +46,7 @@ models:
       - name: payment_id
         description: Payment ID
         tests:
+          - unique
           - not_null
       - name: order_id
         description: Order ID

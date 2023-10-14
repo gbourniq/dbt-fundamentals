@@ -6,12 +6,15 @@ generate-lockfile:
 fmt:
 	python -m sqlfluff format
 
+test:
+	dbt build --exclude package:dbt_project_evaluator
+
 lint:
 	python -m sqlfluff lint
 	python -m yamllint .
 
-test:
-	dbt build
+check:
+	dbt build --select package:dbt_project_evaluator
 
 test-coverage:
 	dbt run-operation required_tests

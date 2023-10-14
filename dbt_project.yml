@@ -20,6 +20,7 @@ snapshot-paths: ["snapshots"]
 
 on-run-end:
   - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
+  - "{{ dbt_project_evaluator.print_dbt_project_evaluator_issues() }}"
 
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
@@ -52,3 +53,11 @@ models:
 
 vars:
   "dbt_date:time_zone": "America/Los_Angeles"
+  exclude_packages: ["dbt_artifacts"]
+  exclude_paths_from_project: [
+    "models/.*fct_.*"  # no PK in fact tables
+  ]
+
+tests:
+  dbt_project_evaluator:
+    +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'error') }}"
