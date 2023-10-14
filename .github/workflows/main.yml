@@ -37,8 +37,15 @@ jobs:
           cache-dependency-path: 'requirements.txt'
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
+      # - name: Cache Python dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.local/share/virtualenvs
+      #       ~/.pyenv
+      #     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
       - name: TEMP
-        run: where dbt
+        run: which dbt
       - name: Check Snowflake DWH connection
         run: dbt debug
       - name: Install dbt dependencies
