@@ -35,6 +35,11 @@ models:
 
   - name: fct_orders
     description: One record per customer in the source data
+    tests:
+      # generic tests from dbt utils
+      # https://hub.getdbt.com/dbt-labs/dbt_utils/latest
+      - dbt_utils.expression_is_true:
+          expression: "amount >= 0 and amount < 100"
     columns:
       - name: order_id
         description: Order ID placed by a customer
@@ -69,6 +74,11 @@ models:
         description: Order amount
         tests:
           - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100
+              row_condition: "order_id is not null"
+              strictly: False
       - name: payment_date
         description: Order amount
         tests:

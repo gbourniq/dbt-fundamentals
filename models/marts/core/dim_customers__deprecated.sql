@@ -1,14 +1,10 @@
 -- Get staging tables
--- In this new model, we join the stg_additional_customers seed
+-- In this old model, stg_additional_customers seed is not joined
 
 {{ config(required_tests=None) }}
 
 WITH customers AS (
-  SELECT * FROM (
-    SELECT * FROM {{ ref('stg_customers') }}
-    UNION
-    SELECT * FROM {{ ref('stg_additional_customers') }}
-  )
+  SELECT * FROM {{ ref('stg_customers') }}
 ),
 
 orders AS (
