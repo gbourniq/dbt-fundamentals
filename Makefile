@@ -7,7 +7,7 @@ fmt:
 	python -m sqlfluff format
 
 test:
-	dbt build --exclude package:dbt_project_evaluator --fail-fast --store-failures
+	dbt build --exclude package:dbt_project_evaluator --fail-fast
 
 lint:
 	python -m sqlfluff lint

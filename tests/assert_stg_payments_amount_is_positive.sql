@@ -3,6 +3,8 @@
 -- Therefore return records where this isn't true to make the test fail.
 -- Can reference multiple tables, and will be shown in the lineage graph.
 
+-- {{ config(severity="warn") }}
+
 SELECT
   order_id,
   SUM(amount) AS total_amount

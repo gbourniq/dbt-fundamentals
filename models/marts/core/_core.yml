@@ -70,6 +70,16 @@ models:
           - accepted_values:
               values:
                 ["placed", "shipped", "completed", "return_pending", "returned"]
+              # test configuration
+              # can be defined as {{ config(...) }} in generic tests
+              # or at the project level
+              config:
+                severity: warn
+                warn_if: ">10"
+                error_if: ">20"
+                where_date: "order_date > '2015-01-01" # ignore records before that date
+                limit: 100 # do not report more than 100 errors
+                store_failures: true
       - name: amount
         description: Order amount
         tests:

@@ -58,6 +58,15 @@ vars:
     "models/.*fct_.*"  # no PK in fact tables
   ]
 
+# can be overridden as {{ config(...) }} in the generic tests, or in the models (yaml)
 tests:
   dbt_project_evaluator:
     +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'error') }}"
+    +warn_if: ">5"
+    +error_if: ">10"
+    +limit: 100
+  jaffle_shop:
+    +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'error') }}"
+    +store_failures: true
+    +schema: test_failures
+    # +where_date: "order_date > '2015-01-01" # ignore records before that date

@@ -1,3 +1,5 @@
+-- noqa: disable=all
+
 {% test positive_value(model, column_name) %}
 SELECT
     *
