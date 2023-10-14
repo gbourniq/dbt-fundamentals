@@ -4,7 +4,7 @@ WITH customers AS (
   SELECT * FROM (
     SELECT * FROM {{ ref('stg_customers') }}
     UNION
-    SELECT * FROM {{ ref('additional_customers') }}
+    SELECT * FROM {{ ref('stg_additional_customers') }}
   )
 ),
 

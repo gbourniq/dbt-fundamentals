@@ -31,3 +31,8 @@ models:
       - name: created_at
         tests:
           - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: year
+              interval: 10

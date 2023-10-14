@@ -18,6 +18,9 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+on-run-end:
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
+
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
@@ -33,9 +36,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 # everything in it will be materialized as a table; and everything in example
 # will be materialized as a view.
 models:
+  dbt_artifacts:
+    schema: monitoring
   jaffle_shop:
     marts:
       core:
         +materialized: table
     staging:
       +materialized: view
+
+vars:
+  "dbt_date:time_zone": "America/Los_Angeles"
