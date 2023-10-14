@@ -3,22 +3,26 @@
 ![Data Lineage](.github/assets/lineage_graph.png)
 
 ## dbt documentation
+
 <https://courses.getdbt.com/courses>
 <https://docs.getdbt.com/guides/best-practices>
 <https://docs.getdbt.com/docs/introduction>
 <https://docs.getdbt.com/reference/references-overview>
 
 ## Snowflake instance
+
 <https://qr92018.eu-west-2.aws.snowflakecomputing.com/>
 
 # Setup
 
 Install dbt in a virtual environment
+
 ```bash
 pip install --no-dependencies -r requirements.txt
 ```
 
 Create a `~/.dbt/profiles.yml`
+
 ```
 personal_profile:
   target: dev
@@ -43,18 +47,21 @@ personal_profile:
 ```
 
 Check connection
+
 ```bash
 dbt deps
 dbt debug
 ```
 
 Create database, schemas and tables
+
 ```bash
 dbt run-operation create_db_objects
 dbt run-operation create_sample_src_tables
 ```
 
 Build and test dbt models
+
 ```bash
 dbt build
 ```
@@ -83,3 +90,7 @@ Materialization defines how dbt builds the models (select statements).
 Generally, start with a view, when it takes too long to query, "upgrade" the model to a table.
 When the table takes too long to build, consider upgrading to an incremental table.
 Upgrading to an incremental table is not straightforward, follow the [dbt documentation](https://courses.getdbt.com/courses/take/advanced-materializations/lessons/30195285-incremental-models)
+
+# Node selection syntax
+
+<https://docs.getdbt.com/reference/node-selection/syntax>
