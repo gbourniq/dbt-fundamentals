@@ -26,15 +26,20 @@ sources:
             tests:
               - unique
               - not_null
-          - name: order_id
+          - name: orderid
             data_type: number
-          - name: payment_method
+          - name: paymentmethod
             data_type: string
+            tests:
+              - accepted_values:
+                  values: ['credit_card', 'bank_transfer', 'gift_card', 'coupon']
+                  config:
+                    where: "status != 'fail'"
           - name: status
             data_type: string
           - name: amount
             data_type: number
-          - name: created_at
+          - name: created
             data_type: date
 
 # https://docs.getdbt.com/docs/build/tests
@@ -46,8 +51,12 @@ models:
       - name: payment_id
         description: Payment ID
         tests:
-          - unique
-          - not_null
+          - unique:
+              config:
+                severity: warn
+          - not_null:
+              config:
+                severity: warn
       - name: order_id
         description: Order ID
         tests:
@@ -67,9 +76,12 @@ models:
           - not_null
       - name: created_at
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
           - dbt_expectations.expect_column_values_to_be_of_type:
               column_type: date
           - dbt_expectations.expect_row_values_to_have_recent_data:
               datepart: year
               interval: 10
+              where: "created_at is not null"

@@ -8,18 +8,27 @@
 # seeds, analyses, etc. e.g gitlabhq/snowflake_spend
 
 packages:
+    # https://hub.getdbt.com/dbt-labs/dbt_utils/latest
   - package: dbt-labs/dbt_utils
     version: 1.1.1
+    # https://hub.getdbt.com/calogica/dbt_expectations/latest
   - package: calogica/dbt_expectations
-    version: [">=0.8.0", "<0.9.0"]
+    version: 0.10.0
+    # https://hub.getdbt.com/data-mie/dbt_profiler/latest
   - package: data-mie/dbt_profiler
-    version: 0.6.4
+    version: 0.8.1
+    # https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest
   - package: brooklyn-data/dbt_artifacts
     version: 2.6.1
+    # https://hub.getdbt.com/dbt-labs/dbt_external_tables/latest
   - package: dbt-labs/dbt_external_tables
-    version: 0.8.5
+    version: 0.8.7
+    # https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest
   - package: tnightengale/dbt_meta_testing
     version: 0.3.6
-    # https://dbt-labs.github.io/dbt-project-evaluator/0.8/customization
+    # https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest
   - package: dbt-labs/dbt_project_evaluator
-    version: 0.7.0
+    version: 0.8.0
+    # https://hub.getdbt.com/dbt-labs/audit_helper/latest
+  - package: dbt-labs/audit_helper
+    version: 0.9.0

@@ -91,6 +91,15 @@ Generally, start with a view, when it takes too long to query, "upgrade" the mod
 When the table takes too long to build, consider upgrading to an incremental table.
 Upgrading to an incremental table is not straightforward, follow the [dbt documentation](https://courses.getdbt.com/courses/take/advanced-materializations/lessons/30195285-incremental-models)
 
-# Node selection syntax
+## Node selection syntax
 
 <https://docs.getdbt.com/reference/node-selection/syntax>
+
+## Tests
+
+* Native tests and packages (dbt_expectations) in yml
+* Singular tests: sql files in the tests/ folder, with reference to models.
+  Tests business logic and shows up in the lineage graph.
+* Generic tests, macro-like, parameterized sql, which are reusable across models.
+  Usually start with a singular test (pure sql) then "promote" to a generic tests for reusability.
+* Override native tests by creating a generic tests with the same name, e.g 'not_null', for customization
