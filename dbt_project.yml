@@ -43,11 +43,10 @@ models:
     +required_tests: {"unique.*|not_null": 1}
     +required_docs: true
     marts:
+      # marts models should have unique/not_null, and relationships tests
+      +required_tests: {"relationship.*": 1}
       core:
         +materialized: table
-        fct_orders:
-          # fct_orders should have unique/not_null, and relationships tests
-          +required_tests: {"relationship.*": 1}
     staging:
       +materialized: view
 
