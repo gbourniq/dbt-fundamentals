@@ -19,7 +19,7 @@ macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
 on-run-end:
-  - "{{ dbt_artifacts.upload_results(results) }}"
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
 
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
@@ -44,3 +44,6 @@ models:
         +materialized: table
     staging:
       +materialized: view
+
+vars:
+  "dbt_date:time_zone": "America/Los_Angeles"

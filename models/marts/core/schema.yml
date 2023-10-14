@@ -17,6 +17,7 @@ models:
         tests:
           - unique
           - not_null
+          - positive_value
       - name: first_name
         description: First name of the customer.
       - name: last_name

@@ -1,4 +1,5 @@
 -- https://getdbt.slack.com/archives/CBSQTAPLG/p1695933231660299
+-- for dbt_artifacts to create tables in a custom schema
 {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}

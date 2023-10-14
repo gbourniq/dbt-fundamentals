@@ -34,3 +34,25 @@ models:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
+      - name: order_date
+        tests:
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: year
+              interval: 10
+
+  - name: stg_additional_customers
+    description: This model validates the customer data added from CSV
+    columns:
+      - name: customer_id
+        description: Primary key for customers.
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+          - dbt_expectations.expect_column_value_lengths_to_equal:
+              value: 3
+      - name: first_name
+        description: First name of the customer.
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: "^[a-zA-Z]+$"
