@@ -134,7 +134,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: state
-          path: .state/manifest.json
+          path: .state/
 
       - name: Check if .state/manifest.json changed
         run: echo "STATE_CHANGED=$(git status --porcelain .state/manifest.json)" >> $GITHUB_ENV
