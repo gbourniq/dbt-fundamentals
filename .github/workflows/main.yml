@@ -57,6 +57,9 @@ jobs:
             dbt build --fail-fast;
           fi
 
+      - name: Evaluate dbt Labs' best practices
+        run: make check
+
       - name: Test coverage
         run: make test-coverage
 
@@ -83,17 +86,8 @@ jobs:
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
-      - name: Check Snowflake DWH connection
-        run: dbt debug
-
-      - name: Install dbt dependencies
-        run: dbt deps
-
       - name: Check code is linted
         run: make lint
-
-      - name: Evaluate dbt Labs' best practices
-        run: make check
 
 
   commit-current-state:
