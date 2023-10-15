@@ -19,7 +19,7 @@ env:
   PROFILES_YML_SNOWFLAKE_PASSWORD: ${{ secrets.PROFILES_YML_SNOWFLAKE_PASSWORD }}
   PROFILES_YML_SNOWFLAKE_ROLE: ${{ secrets.PROFILES_YML_SNOWFLAKE_ROLE }}
   PROFILES_YML_SNOWFLAKE_DATABASE: ${{ secrets.PROFILES_YML_SNOWFLAKE_DATABASE }}
-  PROFILES_YML_SNOWFLAKE_SCHEMA: "CI_GHA_${{ github.run_id }}"
+  PROFILES_YML_SNOWFLAKE_SCHEMA: "CI_GHA"
   PROFILES_YML_SNOWFLAKE_WAREHOUSE: ${{ secrets.PROFILES_YML_SNOWFLAKE_WAREHOUSE }}
 
 jobs:
@@ -47,8 +47,18 @@ jobs:
       - name: Test data source freshness
         run: make check-src-freshness
 
-      - name: Build and test models
-        run: make test
+      - name: Build and test changed models
+        run: |
+          if [ -f .state/manifest.json ]; then
+            echo "Running dbt build for modified models and downstream models";
+            dbt build --fail-fast --models state:modified+ --state .state;
+          else
+            echo "Running dbt build for all models";
+            dbt build --fail-fast;
+          fi
+
+      - name: Evaluate dbt Labs' best practices
+        run: make check
 
       - name: Test coverage
         run: make test-coverage
@@ -76,17 +86,8 @@ jobs:
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
-      - name: Check Snowflake DWH connection
-        run: dbt debug
-
-      - name: Install dbt dependencies
-        run: dbt deps
-
       - name: Check code is linted
         run: make lint
-
-      - name: Evaluate dbt Labs' best practices
-        run: make check
 
 
   commit-current-state:
