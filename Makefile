@@ -9,6 +9,10 @@ fmt:
 test:
 	dbt build --exclude package:dbt_project_evaluator --fail-fast
 
+test-slim:
+	rm -rf .state && mkdir .state && mv target/manifest.json .state/manifest.json
+	dbt build --exclude package:dbt_project_evaluator --fail-fast --models state:modified+ --state .state
+
 lint:
 	python -m sqlfluff lint
 	python -m yamllint .
