@@ -60,7 +60,7 @@ dbt run-operation create_db_objects
 dbt run-operation create_sample_src_tables
 ```
 
-Build and test dbt models.
+Build and test dbt models
 
 ```bash
 dbt build
