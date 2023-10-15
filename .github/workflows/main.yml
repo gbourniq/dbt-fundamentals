@@ -47,7 +47,7 @@ jobs:
       - name: Test data source freshness
         run: make check-src-freshness
 
-      - name: Build and test changed models
+      - name: Build and test updated models and downstream nodes
         run: |
           if [ -f .state/manifest.json ]; then
             echo "Running dbt build for modified models and downstream models";
@@ -57,8 +57,15 @@ jobs:
             dbt build --fail-fast;
           fi
 
-      - name: Evaluate dbt Labs' best practices
-        run: make check
+      - name: Evaluate dbt Labs' best practices for updated models
+        run: |
+          if [ -f .state/manifest.json ]; then
+            echo "Running dbt build for modified models and downstream models";
+            dbt build --select package:dbt_project_evaluator --models state:modified+ --state .state;
+          else
+            echo "Running dbt build for all models";
+            dbt build --select package:dbt_project_evaluator;
+          fi
 
       - name: Test coverage
         run: make test-coverage
@@ -92,6 +99,15 @@ jobs:
       - name: Check code is linted
         run: make lint
 
+      - name: Generate current dbt state
+        run: dbt compile
+
+      - name: Upload current dbt state as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: state
+          path: |
+            target/manifest.json
 
   commit-current-state:
     if: github.ref == 'refs/heads/main'
@@ -111,26 +127,14 @@ jobs:
       - name: Clone Repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Download current dbt state artifact
+        uses: actions/download-artifact@v3
         with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
+          name: state
+          path: .state/manifest.json
 
-      - name: Install python dependencies
-        run: pip install --no-dependencies -r requirements.txt
-
-      - name: Install dbt dependencies
-        run: dbt deps
-
-      - name: Generate current state
-        run: |
-          dbt compile
-          rm -rf .state
-          mkdir .state
-          mv target/manifest.json .state/manifest.json
-          echo "STATE_CHANGED=$(git status --porcelain .state/manifest.json)" >> $GITHUB_ENV
+      - name: Check if .state/manifest.json changed
+        run: echo "STATE_CHANGED=$(git status --porcelain .state/manifest.json)" >> $GITHUB_ENV
 
       - name: Commit and push .state/manifest.json if changed
         if: env.STATE_CHANGED != ''
@@ -139,28 +143,3 @@ jobs:
           git add .state/manifest.json
           git commit -m "🤖 Update .state/manifest.json via GitHub Actions [skip ci]"
           git push origin HEAD:main
-
-  cleanup:
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    needs: [commit-current-state]
-    if: always()
-    steps:
-      - name: Clone Repo
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
-
-      - name: Install python dependencies
-        run: pip install --no-dependencies -r requirements.txt
-
-      - name: Install dbt dependencies
-        run: dbt deps
-
-      - name: Cleanup target schema
-        run: dbt run-operation drop_schema
