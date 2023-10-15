@@ -47,8 +47,8 @@ jobs:
       - name: Test data source freshness
         run: make check-src-freshness
 
-      - name: Build and test models
-        run: make test
+      - name: Build and test changed models
+        run: make test-slim
 
       - name: Test coverage
         run: make test-coverage
