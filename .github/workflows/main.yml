@@ -47,7 +47,7 @@ jobs:
       - name: Save dbt packages in cache
         uses: actions/cache@v3
         with:
-          path: dbt_oackages/
+          path: dbt_packages/
           key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
           restore-keys: ${{ runner.os }}-dbt-packages-
 
@@ -106,14 +106,7 @@ jobs:
           fi
 
       - name: Evaluate dbt Labs' best practices
-        run: |
-          if [[ "${{ github.event_name }}" != "schedule" && -f .state/manifest.json ]]; then
-            echo "Running dbt build for modified models and downstream models";
-            dbt build --select package:dbt_project_evaluator --models state:modified+ --state .state;
-          else
-            echo "Running dbt build for all models";
-            dbt build --select package:dbt_project_evaluator;
-          fi
+        run: make check
 
       - name: Test coverage
         run: make test-coverage
