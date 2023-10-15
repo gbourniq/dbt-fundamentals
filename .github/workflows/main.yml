@@ -86,6 +86,9 @@ jobs:
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
+      - name: Install dbt dependencies
+        run: dbt deps
+
       - name: Check code is linted
         run: make lint
 
