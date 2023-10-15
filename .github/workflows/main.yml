@@ -38,10 +38,11 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
 
-      - uses: actions/cache@v3
+      - name: Restore python dependencies from cache
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-tools/release-${{ hashFiles('.requirements.txt') }}
+          key: ${{ runner.os }}-pip-tools/release-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-tools/release-
             ${{ runner.os }}-pip-
