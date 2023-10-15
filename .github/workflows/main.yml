@@ -41,7 +41,8 @@ jobs:
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
-      - name: Save dbt packages in cache
+      - name: Set cache for dbt packages
+        id: dbt_packages_cache
         uses: actions/cache@v3
         with:
           path: dbt_packages/
@@ -49,7 +50,7 @@ jobs:
           restore-keys: ${{ runner.os }}-dbt-packages-
 
       - name: Install dbt packages
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.dbt_packages_cache.outputs.cache-hit != 'true'
         run: dbt deps
 
       - name: Compile dbt state
