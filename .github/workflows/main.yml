@@ -38,6 +38,14 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
 
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-tools/release-${{ hashFiles('.requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-tools/release-
+            ${{ runner.os }}-pip-
+
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
@@ -82,7 +90,7 @@ jobs:
       - name: Restore dbt packages from cache
         uses: actions/cache@v3
         with:
-          path: /tmp/serverless
+          path: dbt_packages/
           key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
           restore-keys: ${{ runner.os }}-dbt-packages-
 
