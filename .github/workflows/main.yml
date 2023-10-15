@@ -139,28 +139,3 @@ jobs:
           git add .state/manifest.json
           git commit -m "🤖 Update .state/manifest.json via GitHub Actions [skip ci]"
           git push origin HEAD:main
-
-  cleanup:
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    needs: [commit-current-state]
-    if: always()
-    steps:
-      - name: Clone Repo
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
-
-      - name: Install python dependencies
-        run: pip install --no-dependencies -r requirements.txt
-
-      - name: Install dbt dependencies
-        run: dbt deps
-
-      - name: Cleanup target schema
-        run: dbt run-operation drop_schema
