@@ -3,4 +3,4 @@ SELECT
   first_name,
   last_name
 
-FROM {{ ref('jaffle_shop', 'sd_additional_customers') }}
+FROM {{ ref('jaffle_shop', 'sd_additional_customers1') }}
