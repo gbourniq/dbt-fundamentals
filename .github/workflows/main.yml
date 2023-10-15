@@ -47,7 +47,7 @@ jobs:
       - name: Save dbt packages in cache
         uses: actions/cache@v3
         with:
-          path: db_oackages/
+          path: dbt_oackages/
           key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
           restore-keys: ${{ runner.os }}-dbt-packages-
 
