@@ -44,12 +44,12 @@ jobs:
       - name: Install dbt packages
         run: dbt deps
 
-      - name: Upload dbt packages
-        uses: actions/upload-artifact@v3
+      - name: Save dbt packages in cache
+        uses: actions/cache@v3
         with:
-          name: dbt_packages
-          path: |
-            dbt_packages
+          path: /tmp/serverless
+          key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
+          restore-keys: ${{ runner.os }}-dbt-packages-
 
       - name: Compile dbt state
         run: dbt compile
@@ -79,11 +79,12 @@ jobs:
       - name: Install python dependencies
         run: pip install --no-dependencies -r requirements.txt
 
-      - name: Download dbt packages
-        uses: actions/download-artifact@v3
+      - name: Restore dbt packages from cache
+        uses: actions/cache@v3
         with:
-          name: dbt_packages
-          path: dbt_packages/
+          path: /tmp/serverless
+          key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
+          restore-keys: ${{ runner.os }}-dbt-packages-
 
       - name: Download dbt target
         uses: actions/download-artifact@v3
