@@ -145,10 +145,9 @@ jobs:
       - name: Check code is linted
         run: make lint
 
-
-  commit-current-state:
+  commit-updated-state:
     if: github.ref == 'refs/heads/main'
-    name: commit dbt state
+    name: update dbt state and docs
     needs: [test, lint]
     runs-on: ubuntu-latest
     permissions:
@@ -164,17 +163,42 @@ jobs:
       - name: Clone Repo
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install python dependencies
+        run: pip install --no-dependencies -r requirements.txt
+
+      - name: Restore dbt packages from cache
+        uses: actions/cache@v3
+        with:
+          path: dbt_packages/
+          key: ${{ runner.os }}-dbt-packages-${{ hashFiles('packages.yml') }}
+          restore-keys: ${{ runner.os }}-dbt-packages-
+
       - name: Download dbt target
         uses: actions/download-artifact@v3
         with:
           name: target
           path: target/
 
+      - name: Update column statistics docs for models
+        run: make dbt-profiler
+
       - name: Commit and push dbt models state
         run: |
           git pull origin HEAD:main
+
+          # update .state/manifest.json
           rm .state/manifest.json || true
           cp target/manifest.json .state/manifest.json
+
+          # commit updated files
+          git add models/**/*.md
           git add .state/manifest.json
-          git commit -m "🤖 Update .state/manifest.json via GitHub Actions [skip ci]"
+          git commit -m "🤖 Update db state and docs via GitHub Actions [skip ci]"
           git push origin HEAD:main
