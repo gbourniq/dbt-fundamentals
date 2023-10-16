@@ -35,7 +35,7 @@ jobs:
 
       - name: "Check commit messages match angular style"
         run: |
-          git fetch origin main
+          git fetch origin main --no-ff
           ! git log origin/main..HEAD  --pretty=format:%s | \
             grep -v -E '^(build|chore|ci|docs|feat|fix|perf|style|refactor|test):'
 
