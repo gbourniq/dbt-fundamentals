@@ -31,12 +31,7 @@ test-coverage:
 	# dbt-coverage compute doc --model-path-filter models/marts --cov-fail-under 0.5
 
 dbt-profiler:
-	@echo "Generate column statistics docs for fact and dim models"
-	find models -type f \( -name 'dim_*' -o -name 'fct_*' \) | while read -r file; do \
-		base=$$(basename -- "$$file" | sed 's/\.[^.]*$$//'); \
-		dir=$$(dirname -- "$$file"); \
-		./scripts/update-relation-profile.sh "$$base" "$$dir"; \
-	done
+	./scripts/run-dbt-profiler.sh
 
 check-src-freshness:
 	dbt source freshness

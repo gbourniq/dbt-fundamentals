@@ -186,7 +186,7 @@ jobs:
           name: target
           path: target/
 
-      - name: Update column statistics docs for models
+      - name: Update column-level statistics docs for models
         run: make dbt-profiler
 
       - name: Commit and push dbt models state
