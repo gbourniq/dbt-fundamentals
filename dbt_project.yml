@@ -54,7 +54,7 @@ models:
       +materialized: view
 
 vars:
-  dbt_date:time_zone: "Europe/London"
+  dbt_date:time_zone: "UTC"
   exclude_packages: ["dbt_artifacts"]
   exclude_paths_from_project: [
     "models/.*fct_.*"  # no PK checks in fact tables
