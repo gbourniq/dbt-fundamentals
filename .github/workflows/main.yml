@@ -31,6 +31,11 @@ jobs:
       - name: Clone Repo
         uses: actions/checkout@v3
 
+      - name: "Check commit messages match angular style"
+        run: |
+          ! git log origin/master..HEAD  --pretty=format:%s | \
+            grep -v -E '^(build|chore|ci|docs|feat|fix|perf|style|refactor|test):'
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
