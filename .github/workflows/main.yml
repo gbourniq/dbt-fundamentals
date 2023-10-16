@@ -30,6 +30,14 @@ jobs:
     steps:
       - name: Clone Repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: '${{ github.event.pull_request.head.sha }}'
+
+      - name: "Check commit messages match angular style"
+        run: |
+          ! git log origin/main..HEAD  --pretty=format:%s | \
+            grep -v -E '^(build|chore|ci|docs|feat|fix|perf|style|refactor|test):'
 
       - name: Set up Python
         uses: actions/setup-python@v4
