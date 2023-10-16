@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.1 (2023-10-16)
+
+### Fix
+
+* Test semantic release ([`841185c`](https://github.com/gbourniq/dbt-fundamentals/commit/841185cf652c14df8f32f7cd560660fdfb7b316c))
+* Test semantic release ([`cd1d54b`](https://github.com/gbourniq/dbt-fundamentals/commit/cd1d54b2e636cfce4e48373a4306aa2566631592))
+
 ## v0.2.0 (2023-10-16)
 
 ### Feature
