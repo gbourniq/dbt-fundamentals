@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dbt-fundamentals"
-version = "0.0.0"
+version = "0.2.0"
 description = "Material for the dbt fundamentals course"
 authors = ["Guillaume Bournique <guillaume.bournique@gmail.com>"]
 readme = "README.md"
