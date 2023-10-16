@@ -36,6 +36,8 @@ dbt-profiler:
 check-src-freshness:
 	dbt source freshness
 
+release:
+	python -m semantic_release publish
 
 # Development
 
