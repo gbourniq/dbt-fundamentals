@@ -1,3 +1,5 @@
+.PHONY: docs
+
 generate-lockfile:
 	poetry check && poetry export -f requirements.txt --output requirements.txt --with dev
 
@@ -6,27 +8,35 @@ generate-lockfile:
 fmt:
 	python -m sqlfluff format
 
-test:
-	dbt build --exclude package:dbt_project_evaluator --fail-fast
-
 lint:
 	python -m sqlfluff lint
 	python -m yamllint .
+
+test:
+	@echo "Running dbt build for modified and downstream models"
+	dbt build --exclude package:dbt_project_evaluator --fail-fast --models state:modified+ --state .state
+
+test-all:
+	@echo "Running dbt build for all models"
+	dbt build --exclude package:dbt_project_evaluator --fail-fast
 
 check:
 	dbt build --select package:dbt_project_evaluator
 
 test-coverage:
 	dbt run-operation required_tests
-	# TODO: uncomment when dbt-coverage releases a version compatible with dbt>1.5.0
+	# TODO: uncomment when dbt-coverage compatible with dbt>1.5.0
 	# dbt docs generate
 	# dbt-coverage compute test --model-path-filter models/marts --cov-fail-under 0.5
 	# dbt-coverage compute doc --model-path-filter models/marts --cov-fail-under 0.5
 
-# TODO: automate this in CI with github autobot https://hub.getdbt.com/data-mie/dbt_profiler/latest
 dbt-profiler:
-	dbt run-operation print_profile_docs --args '{"relation_name": "dim_customers"}' --quiet
-	echo "Copy the above output into models/marts/core/_core.md"
+	@echo "Generate column statistics docs for fact and dim models"
+	find models -type f \( -name 'dim_*' -o -name 'fct_*' \) | while read -r file; do \
+		base=$$(basename -- "$$file" | sed 's/\.[^.]*$$//'); \
+		dir=$$(dirname -- "$$file"); \
+		./scripts/update-relation-profile.sh "$$base" "$$dir"; \
+	done
 
 check-src-freshness:
 	dbt source freshness

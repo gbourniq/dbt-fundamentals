@@ -34,7 +34,12 @@ models:
           - not_null
 
   - name: fct_orders
-    description: One record per customer in the source data
+    description: |
+      One record per customer in the source data.
+
+      `dbt-profiler` results:
+
+      {{ doc("dbt_profiler__fct_orders") }}
     tests:
       # generic tests from dbt utils
       # https://hub.getdbt.com/dbt-labs/dbt_utils/latest
