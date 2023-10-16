@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.2 (2023-10-16)
+
+### Fix
+
+* Test semantic release ([`bc590ec`](https://github.com/gbourniq/dbt-fundamentals/commit/bc590ecfc46d8e9b31d48d7b97eebef796312276))
+* Add snowflake setup macro running in CI ([`842a07c`](https://github.com/gbourniq/dbt-fundamentals/commit/842a07ce290d8a7ead96e47894cd535ae9759bd8))
+
 ## v0.2.1 (2023-10-16)
 
 ### Fix
