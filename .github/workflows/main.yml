@@ -33,7 +33,7 @@ jobs:
 
       - name: "Check commit messages match angular style"
         run: |
-          ! git log origin/master..HEAD  --pretty=format:%s | \
+          ! git log origin/main..HEAD  --pretty=format:%s | \
             grep -v -E '^(build|chore|ci|docs|feat|fix|perf|style|refactor|test):'
 
       - name: Set up Python
