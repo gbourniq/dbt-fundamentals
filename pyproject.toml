@@ -23,6 +23,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.semantic_release]
 branch = "main"
+version_variable = "dbt_project.yml:version"
 version_toml = "pyproject.toml:tool.poetry.version"
 tag_commit = true
 commit_subject = "{version}"
