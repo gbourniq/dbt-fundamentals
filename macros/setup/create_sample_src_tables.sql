@@ -10,7 +10,7 @@
 {% set query %}
 
     -- customers table
-    CREATE TABLE {{ database }}.jaffle_shop.customers(
+    CREATE TABLE {{ database }}.jaffle_shop.customers IF NOT EXISTS (
         id integer,
         first_name varchar,
         last_name varchar
@@ -24,7 +24,7 @@
     );
 
     -- orders table
-    CREATE TABLE {{ database }}.jaffle_shop.orders(
+    CREATE TABLE {{ database }}.jaffle_shop.orders IF NOT EXISTS (
         id integer,
         user_id integer,
         order_date date,
@@ -40,7 +40,7 @@
     );
 
     -- payments table
-    CREATE TABLE {{ database }}.stripe.payment(
+    CREATE TABLE {{ database }}.stripe.payment IF NOT EXISTS (
         id integer,
         orderid integer,
         paymentmethod varchar,
