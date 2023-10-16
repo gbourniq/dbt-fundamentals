@@ -6,12 +6,17 @@ generate-lockfile:
 fmt:
 	python -m sqlfluff format
 
-test:
-	dbt build --exclude package:dbt_project_evaluator --fail-fast
-
 lint:
 	python -m sqlfluff lint
 	python -m yamllint .
+
+test:
+	@echo "Running dbt build for modified and downstream models"
+	dbt build --exclude package:dbt_project_evaluator --fail-fast --models state:modified+ --state .state
+
+test-all:
+	@echo "Running dbt build for all models"
+	dbt build --exclude package:dbt_project_evaluator --fail-fast
 
 check:
 	dbt build --select package:dbt_project_evaluator

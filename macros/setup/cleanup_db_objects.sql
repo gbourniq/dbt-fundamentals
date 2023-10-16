@@ -3,7 +3,7 @@
 -- https://docs.getdbt.com/reference/dbt-jinja-functions/target
 -- https://docs.getdbt.com/reference/dbt-jinja-functions
 
-{% macro delete_database_cleanup(database=target.database) %}
+{% macro cleanup_db_objects(database=target.database) %}
 
 {{ log('deleting database ' ~ database, info=True) }}
 

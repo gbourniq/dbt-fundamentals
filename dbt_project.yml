@@ -38,7 +38,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # will be materialized as a view.
 models:
   dbt_artifacts:
-    schema: monitoring
+    schema: dbt_artifacts
+  dbt_project_evaluator:
+    schema: dbt_project_evaluator
   jaffle_shop:
     # all models should have docs, and unique/not_null tests
     +required_tests: {"unique.*|not_null": 1}
@@ -52,10 +54,10 @@ models:
       +materialized: view
 
 vars:
-  "dbt_date:time_zone": "America/Los_Angeles"
+  dbt_date:time_zone: "Europe/London"
   exclude_packages: ["dbt_artifacts"]
   exclude_paths_from_project: [
-    "models/.*fct_.*"  # no PK in fact tables
+    "models/.*fct_.*"  # no PK checks in fact tables
   ]
 
 # can be overridden as {{ config(...) }} in the generic tests, or in the models (yaml)
